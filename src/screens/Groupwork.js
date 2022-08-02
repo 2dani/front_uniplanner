@@ -25,7 +25,13 @@ const Groupwork = () => {
 
     const getGroupwork = async () => {
         try{
-            const {data} = await axios.get("http://localhost:9000/api/grwork/all")
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const {data} = await axios.get("http://localhost:9000/api/grwork/all", config)
             setGroupworks(data)
         } catch(err){
             console.log(err)
@@ -35,7 +41,13 @@ const Groupwork = () => {
     // delete the Groupwork
     const removeGroupwork = async(id) => {
         try{
-            const { status } = await axios.delete(`http://localhost:9000/api/grwork/${id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.delete(`http://localhost:9000/api/grwork/${id}`, config)
             console.log("GRWORK",status)
             if (status === 200){
                 getGroupwork()
@@ -49,7 +61,13 @@ const Groupwork = () => {
     //see a Details
     const getGroupworkInfo = async () => {
         try{
-           const { data } = await axios.get(`http://localhost:9000/api/grwork/${params.id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const { data } = await axios.get(`http://localhost:9000/api/grwork/${params.id}`,config)
            console.log("*******GRWORKDATA*********", data)
            setName(data.name)
            setPnumber(data.pnumber)

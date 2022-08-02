@@ -17,7 +17,13 @@ const Meeting = () => {
     // networking
     const getMeetings = async () => {
         try {
-           const {data} = await axios.get("http://localhost:9000/api/meeting/all")
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const {data} = await axios.get("http://localhost:9000/api/meeting/all", config)
             setMeetings(data)
 
         } catch (err) {
@@ -27,6 +33,12 @@ const Meeting = () => {
 
     const registerTodo = async () => {
         try{
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
             const newMeeting = {
                 title,
                 mDate,
@@ -35,7 +47,7 @@ const Meeting = () => {
             }
             console.log(newMeeting)
 
-            const {data} = await axios.post("http://localhost:9000/api/meeting", newMeeting)
+            const {data} = await axios.post("http://localhost:9000/api/meeting", newMeeting, config)
             console.log("$$$$$$$$$$$$$$$$$$", data)
         } catch(err) {
             console.log(err)
@@ -46,7 +58,13 @@ const Meeting = () => {
     // show datails Info of Meeting
     const getMeetingInfo = async () => {
         try{
-           const { data } = await axios.get(`http://localhost:9000/api/meeting/${params.id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const { data } = await axios.get(`http://localhost:9000/api/meeting/${params.id}`, config)
            console.log("********MEETING INFO********", data)
            setMeeting(data.title)
            setEndDate(data.mDate)
@@ -61,7 +79,13 @@ const Meeting = () => {
     //delete Meeting
     const removeMeeting = async(id) => {
         try{
-            const { status } = await axios.delete(`http://localhost:9000/api/meeting/${id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.delete(`http://localhost:9000/api/meeting/${id}`, config)
             console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",status)
             if (status === 200){
                 getMeetings()

@@ -23,6 +23,12 @@ const AddGr = () => {
         console.log("JKJKJKJKJKJKJKJKJKJKJKJ")
 
         try {
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
                 const newGroupwork = {
                     name: name,
                     pnumber: pnumber,
@@ -33,7 +39,7 @@ const AddGr = () => {
                 }
                 console.log("-------------------", newGroupwork)
                 
-                const {data, status} = await axios.post(`http://localhost:9000/api/grwork/add`, newGroupwork)
+                const {data, status} = await axios.post(`http://localhost:9000/api/grwork/add`, newGroupwork, config)
                 console.log("DATAIS",data)
                 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!",status)
                 
@@ -48,7 +54,13 @@ const AddGr = () => {
 
     const getGroupworkInfo = async () => {
         try{
-           const { data } = await instance.get(`/grwork/${params.id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const { data } = await instance.get(`/grwork/${params.id}`, config)
            console.log("****************", data)
            setName(data.name)
            setPnumber(data.pnumber)
@@ -74,7 +86,13 @@ const AddGr = () => {
             memo: memo,
         }
         try{
-            const { status } = await axios.put(`http://localhost:9000/api/grwork/${params.id}`, updateGr)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.put(`http://localhost:9000/api/grwork/${params.id}`, updateGr, config)
             console.log("GR IS UPDATED", status)
 
             if (status === 200) {

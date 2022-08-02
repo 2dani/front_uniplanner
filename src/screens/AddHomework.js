@@ -10,9 +10,9 @@ const AddHomework = () => {
     const navigate = useNavigate();
 
     const [name, setName] = useState("")
-    const [practiceNum, setPnumber] = useState(0)
-    const [submitDate, setSdate] = useState("")
-    const [submitTime, setStime] = useState("")
+    const [practiceNum, setPracticeNumber] = useState(0)
+    const [submitDate, setSubmitDate] = useState("")
+    const [submitTime, setSubmitTime] = useState("")
     const [memo, setMemo] = useState("")
 
     const instance = axios.create({
@@ -67,10 +67,10 @@ const AddHomework = () => {
             const { data } = await axios.get(`http://localhost:9000/api/submit/${params.id}`, config)
             console.log("*******getSubmitDetail*********", data)
             setName(data.name)
-            setPnumber(data.practiceNum)
-            setSdate(data.submitDate)
-            setStime(data.submitTime)
-            setStime(data.memo)
+            setPracticeNumber(data.practiceNum)
+            setSubmitDate(data.submitDate)
+            setSubmitTime(data.submitTime)
+            setMemo(data.memo)
         } catch(err) {
             console.log(err)
         }
@@ -108,7 +108,7 @@ const AddHomework = () => {
                             type={"number"}
                             placeholder={"Insert Practice number"}
                             value={practiceNum}
-                            onChange={e => setPnumber(e.target.value)}
+                            onChange={e => setPracticeNumber(e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group controlId={"submitDate"} className={"mb-3"}>
@@ -117,7 +117,7 @@ const AddHomework = () => {
                             type={"date"}
                             placeholder={"Insert Submit date"}
                             value={submitDate}
-                            onChange={e => setSdate(e.target.value)}
+                            onChange={e => setSubmitDate(e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group controlId={"submitTime"} className={"mb-3"}>
@@ -126,7 +126,7 @@ const AddHomework = () => {
                             type={"time"}
                             placeholder={"Insert Submit time"} 
                             value={submitTime}
-                            onChange={e => setStime(e.target.value)}
+                            onChange={e => setSubmitTime(e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group controlId={"memo"} className={"mb-3"}>

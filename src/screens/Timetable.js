@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Button, Container, Form, Row, Col} from "react-bootstrap";
 import RTimeTable from "react-timetable-events";
-import { Link, useParams, useNavigate, } from 'react-router-dom';
+import { useParams, useNavigate, } from 'react-router-dom';
 import format from 'date-fns/format';
 import { CustomModal } from "../component"
 
@@ -47,7 +47,13 @@ const TimeTable = () => {
 
     const getTimetables = async () => {
         try {
-            const {data} = await axios.get("http://localhost:9000/api/timetable/all")
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const {data} = await axios.get("http://localhost:9000/api/timetable/all", config)
             console.log("GETTIMETABLESSSSSSSSS",data)
 
             console.log(data.filter(i => i.day === 1 ))
@@ -109,6 +115,12 @@ const TimeTable = () => {
         e.preventDefault()
 
         try {
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
             const newTimeTable = {
                 name: subject,
                 location,
@@ -118,7 +130,7 @@ const TimeTable = () => {
                 type
             }
             
-            const {status} = await axios.post("http://localhost:9000/api/timetable", newTimeTable)
+            const {status} = await axios.post("http://localhost:9000/api/timetable", newTimeTable, config)
 
             if (status === 200) {
                 getTimetables()
@@ -132,7 +144,13 @@ const TimeTable = () => {
 
     const deleteTimetables = async (id) => {
         try{
-            const { status } = await axios.delete(`http://localhost:9000/api/timetable/${id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.delete(`http://localhost:9000/api/timetable/${id}`, config)
             
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!DELETE!!!!!!!!!!!!!!!!!!!!!!!", status)
 

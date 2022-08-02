@@ -15,16 +15,22 @@ const Testddayadd = () => {
 
     const addTestHandler = async (e) => {
         e.preventDefault()
+        const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
         const newTest = {
             testName: name,
             testDate: sdate, 
-            startTime: stime, 
-            endTime: endtime, 
+            timeStart: stime, 
+            timeEnd: endtime, 
             memo
         }
         console.log(newTest)
 
-        const {data, status} = await axios.post("http://localhost:9000/api/test", newTest)
+        const {data, status} = await axios.post("http://localhost:9000/api/test", newTest, config)
         console.log(status)
 
         if (status === 200) {
@@ -43,7 +49,13 @@ const Testddayadd = () => {
             memo: memo
         }
         try{
-            const { status } = await axios.put(`http://localhost:9000/api/test/${params.id}`, updateTest)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.put(`http://localhost:9000/api/test/${params.id}`, updateTest, config)
             console.log("UPDATED", status)
 
             if (status === 200) {
@@ -59,7 +71,13 @@ const Testddayadd = () => {
 
     const getTestInfo = async () => {
         try{
-           const { data } = await axios.get(`http://localhost:9000/api/test/${params.id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const { data } = await axios.get(`http://localhost:9000/api/test/${params.id}`, config)
            console.log("******GETTESTINFO*******", data)
            setName(data.testName)
            setSdate(data.testDate)
@@ -74,7 +92,13 @@ const Testddayadd = () => {
 
     const deleteATest = async(e) => { 
         try{
-            const { status } = await axios.delete(`http://localhost:9000/api/test/${params.id}`)
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { status } = await axios.delete(`http://localhost:9000/api/test/${params.id}`, config)
             console.log("DELETE", status)
 
             if (status === 200) {

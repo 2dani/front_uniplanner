@@ -13,7 +13,13 @@ const Testdday = () => {
 
     const getTest = async () => {
         try {
-           const {data} = await axios.get("http://localhost:9000/api/test/all")
+            const token = await localStorage.getItem("token")
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           const {data} = await axios.get("http://localhost:9000/api/test/all", config)
             setddayss(data)
             console.log(data)
 
