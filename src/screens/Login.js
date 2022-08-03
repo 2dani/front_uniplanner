@@ -27,7 +27,8 @@ const Login = () => {
             
             if (status === 200){
                 localStorage.setItem('token', data.token)
-                navigate('/profile')
+                navigate('/')
+                window.location.reload(false)
             }
  
          } catch (err) {

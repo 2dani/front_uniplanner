@@ -16,8 +16,8 @@ const Header = () => {
   const logoutHandler = () => {
 
     localStorage.removeItem("token")
-
     navigate('/')
+    window.location.reload(false)
     //getProfileFun()
   }
 
@@ -37,7 +37,8 @@ const Header = () => {
       console.log("_____******________", data)
       setName(data.name)
       setEmail(data.email)
-    
+
+      //window.location.reload(false)
     } catch(err) {
         console.log(err)
     }
@@ -45,6 +46,7 @@ const Header = () => {
 
   useEffect(() => {
     getProfileFun()
+    
   }, [])
 
     return (
@@ -58,7 +60,7 @@ const Header = () => {
               <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ml-auto'>
                     
-                    {name 
+                    {name
                       ? (
                           <>
                             <LinkContainer to={"/"}>
