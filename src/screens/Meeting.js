@@ -24,7 +24,8 @@ const Meeting = () => {
                 }
             }
            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/all", config)
-            setMeetings(data)
+           console.log("FHIAFIAFHASFAHFIAHFIAFIFH",data) 
+           setMeetings(data)
 
         } catch (err) {
             console.log(err)

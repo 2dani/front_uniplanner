@@ -155,7 +155,9 @@ const TimeTable = () => {
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!DELETE!!!!!!!!!!!!!!!!!!!!!!!", status)
 
             if (status === 200) {
+                window.location.reload(false)
                 handleClose()
+                
             }
             
          } catch(err) {
