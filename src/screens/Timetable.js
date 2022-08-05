@@ -53,7 +53,7 @@ const TimeTable = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const {data} = await axios.get("http://localhost:9000/api/timetable/all", config)
+            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable/all", config)
             console.log("GETTIMETABLESSSSSSSSS",data)
 
             console.log(data.filter(i => i.day === 1 ))
@@ -130,7 +130,7 @@ const TimeTable = () => {
                 type
             }
             
-            const {status} = await axios.post("http://localhost:9000/api/timetable", newTimeTable, config)
+            const {status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable", newTimeTable, config)
 
             if (status === 200) {
                 getTimetables()
@@ -150,7 +150,7 @@ const TimeTable = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.delete(`http://localhost:9000/api/timetable/${id}`, config)
+            const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable/${id}`, config)
             
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!DELETE!!!!!!!!!!!!!!!!!!!!!!!", status)
 

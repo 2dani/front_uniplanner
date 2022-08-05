@@ -16,7 +16,7 @@ const AddHomework = () => {
     const [memo, setMemo] = useState("")
 
     const instance = axios.create({
-        baseURL: 'http://localhost:9000/api'
+        baseURL: 'http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api'
     })
     
 
@@ -64,7 +64,7 @@ const AddHomework = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { data } = await axios.get(`http://localhost:9000/api/submit/${params.id}`, config)
+            const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/submit/${params.id}`, config)
             console.log("*******getSubmitDetail*********", data)
             setName(data.name)
             setPracticeNumber(data.practiceNum)

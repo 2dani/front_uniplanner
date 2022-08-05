@@ -19,7 +19,7 @@ const Testdday = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const {data} = await axios.get("http://localhost:9000/api/test/all", config)
+           const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/all", config)
             setddayss(data)
             console.log(data)
 
@@ -30,7 +30,7 @@ const Testdday = () => {
 
  /*   const updateTest = async (id) => {
         try{
-            const { status } = await axios.patch(`http://localhost:9000/api/test/${id}`)
+            const { status } = await axios.patch(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${id}`)
             console.log("===================================",status)
             if (status === 200){
                 getTest()

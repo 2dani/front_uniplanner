@@ -20,7 +20,9 @@ const Signup = () => {
             alert('Passwords do not match')
         }
 
+
         try {
+
             const newSignup = {
                 name: name,
                 email: email,
@@ -28,7 +30,7 @@ const Signup = () => {
                 
             }
 
-            const {status} = await axios.post("http://localhost:9000/api/user/signup", newSignup)
+            const {status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/signup", newSignup)
             
             if (status === 200){
                 navigate('/login')

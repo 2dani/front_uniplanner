@@ -15,7 +15,7 @@ const AddGr = () => {
     const [memo, setMemo] = useState("")
 
     const instance = axios.create({
-        baseURL: 'http://localhost:9000/api'
+        baseURL: 'http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api'
     })
 
     const addGRHandler = async (e) => {
@@ -39,7 +39,7 @@ const AddGr = () => {
                 }
                 console.log("-------------------", newGroupwork)
                 
-                const {data, status} = await axios.post(`http://localhost:9000/api/grwork/add`, newGroupwork, config)
+                const {data, status} = await axios.post(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/add`, newGroupwork, config)
                 console.log("DATAIS",data)
                 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!",status)
                 
@@ -92,7 +92,7 @@ const AddGr = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.put(`http://localhost:9000/api/grwork/${params.id}`, updateGr, config)
+            const { status } = await axios.put(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${params.id}`, updateGr, config)
             console.log("GR IS UPDATED", status)
 
             if (status === 200) {

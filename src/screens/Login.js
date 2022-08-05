@@ -23,7 +23,7 @@ const Login = () => {
                 password,
             }
 
-            const {data, status} = await axios.post("http://localhost:9000/api/user/login", loginInfo)
+            const {data, status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/login", loginInfo)
             
             if (status === 200){
                 localStorage.setItem('token', data.token)

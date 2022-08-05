@@ -30,7 +30,7 @@ const Testddayadd = () => {
         }
         console.log(newTest)
 
-        const {data, status} = await axios.post("http://localhost:9000/api/test", newTest, config)
+        const {data, status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test", newTest, config)
         console.log(status)
 
         if (status === 200) {
@@ -55,7 +55,7 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.put(`http://localhost:9000/api/test/${params.id}`, updateTest, config)
+            const { status } = await axios.put(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, updateTest, config)
             console.log("UPDATED", status)
 
             if (status === 200) {
@@ -77,7 +77,7 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const { data } = await axios.get(`http://localhost:9000/api/test/${params.id}`, config)
+           const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, config)
            console.log("******GETTESTINFO*******", data)
            setName(data.testName)
            setSdate(data.testDate)
@@ -98,7 +98,7 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.delete(`http://localhost:9000/api/test/${params.id}`, config)
+            const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, config)
             console.log("DELETE", status)
 
             if (status === 200) {

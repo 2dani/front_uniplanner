@@ -33,7 +33,7 @@ const Header = () => {
           Authorization: `Bearer ${token}`
         },
       }
-      const { data } = await axios.get("http://localhost:9000/api/user/profile", config)
+      const { data } = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/profile", config)
       console.log("_____******________", data)
       setName(data.name)
       setEmail(data.email)

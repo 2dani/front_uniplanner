@@ -31,7 +31,7 @@ const Groupwork = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const {data} = await axios.get("http://localhost:9000/api/grwork/all", config)
+            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/all", config)
             setGroupworks(data)
         } catch(err){
             console.log(err)
@@ -47,7 +47,7 @@ const Groupwork = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.delete(`http://localhost:9000/api/grwork/${id}`, config)
+            const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${id}`, config)
             console.log("GRWORK",status)
             if (status === 200){
                 getGroupwork()
@@ -67,7 +67,7 @@ const Groupwork = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const { data } = await axios.get(`http://localhost:9000/api/grwork/${params.id}`,config)
+           const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${params.id}`,config)
            console.log("*******GRWORKDATA*********", data)
            setName(data.name)
            setPnumber(data.pnumber)

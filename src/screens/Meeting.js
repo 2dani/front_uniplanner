@@ -23,7 +23,7 @@ const Meeting = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const {data} = await axios.get("http://localhost:9000/api/meeting/all", config)
+           const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/all", config)
             setMeetings(data)
 
         } catch (err) {
@@ -47,7 +47,7 @@ const Meeting = () => {
             }
             console.log(newMeeting)
 
-            const {data} = await axios.post("http://localhost:9000/api/meeting", newMeeting, config)
+            const {data} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting", newMeeting, config)
             console.log("$$$$$$$$$$$$$$$$$$", data)
         } catch(err) {
             console.log(err)
@@ -64,7 +64,7 @@ const Meeting = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const { data } = await axios.get(`http://localhost:9000/api/meeting/${params.id}`, config)
+           const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/${params.id}`, config)
            console.log("********MEETING INFO********", data)
            setMeeting(data.title)
            setEndDate(data.mDate)
@@ -85,7 +85,7 @@ const Meeting = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { status } = await axios.delete(`http://localhost:9000/api/meeting/${id}`, config)
+            const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/${id}`, config)
             console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",status)
             if (status === 200){
                 getMeetings()
