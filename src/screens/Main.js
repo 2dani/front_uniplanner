@@ -31,7 +31,8 @@ const Main = () => {
         }
     }
 
-    const registerTodo = async () => {
+    const registerTodo = async (e) => {
+        e.preventDefault()
         try{
             const token = await localStorage.getItem("token")
             const config = {
@@ -43,9 +44,10 @@ const Main = () => {
                 todo,
                 endDate,
             }
-            console.log(newTodo)
+            console.log("THis is NewTodo",newTodo)
             const {data} = await instance.post("/todo", newTodo, config)
-            console.log("$$$$$$$$$$$$$$$$$$", data)
+            console.log("$$$$$$$$$TODO DATA$$$$$$$$$", data)
+            window.location.reload(false)
         } catch(err) {
             console.log(err)
         }
@@ -115,7 +117,7 @@ const Main = () => {
                        />
                     </Form.Group>
 
-                    <Form.Group contorllId={"endDate"} className={"mb-3"}>
+                    <Form.Group contorlId={"endDate"} className={"mb-3"}>
                     <Form.Label>until</Form.Label>
                         <Form.Control 
                             type={"date"}

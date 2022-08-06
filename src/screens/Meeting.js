@@ -24,7 +24,7 @@ const Meeting = () => {
                 }
             }
            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/all", config)
-           console.log("FHIAFIAFHASFAHFIAHFIAFIFH",data) 
+           console.log("GETMEETINGSDATA!!",data) 
            setMeetings(data)
 
         } catch (err) {
@@ -32,7 +32,8 @@ const Meeting = () => {
         }
     }
 
-    const registerTodo = async () => {
+    const registerTodo = async (e) => {
+        e.preventDefault()
         try{
             const token = await localStorage.getItem("token")
             const config = {
@@ -46,10 +47,12 @@ const Meeting = () => {
                 sTime,
                 link,
             }
-            console.log(newMeeting)
+            console.log("NEW MEETING",newMeeting)
 
             const {data} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting", newMeeting, config)
-            console.log("$$$$$$$$$$$$$$$$$$", data)
+            console.log("$$$$$$$$$$$$$$$$$$ REGISTER TODO DATA", data)
+
+            window.location.reload(false)
         } catch(err) {
             console.log(err)
         }
@@ -100,7 +103,10 @@ const Meeting = () => {
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
+            
             getMeetings()
+            
+
         }
     }, [])
 
@@ -119,7 +125,7 @@ const Meeting = () => {
                        />
                     </Form.Group>
 
-                    <Form.Group contorllId={"mDate"} className={"mb-3"}>
+                    <Form.Group contorlId={"mDate"} className={"mb-3"}>
                     <Form.Label>When</Form.Label>
                         <Form.Control 
                             type={"date"}
@@ -131,7 +137,7 @@ const Meeting = () => {
                          />
                     </Form.Group>
 
-                    <Form.Group contorllId={"sTime"} className={"mb-3"}>
+                    <Form.Group contorlId={"sTime"} className={"mb-3"}>
                     <Form.Label>Start time</Form.Label>
                         <Form.Control 
                             type={"time"}
@@ -141,7 +147,7 @@ const Meeting = () => {
                          />
                     </Form.Group>
 
-                    <Form.Group contorllId={"link"} className={"mb-3"}>
+                    <Form.Group contorlId={"link"} className={"mb-3"}>
                     <Form.Label> Meeting Link </Form.Label>
                         <Form.Control 
                             type={"text"}
@@ -162,25 +168,25 @@ const Meeting = () => {
                 </Form>
             </Row>
             <Row className={"mt-3"}>
-                {meetings && meetings.map(meetings => (
-                    <Card className={"mt-4"}>
+                {meetings && meetings.map(meeting => (
+                    <Card key={meeting._id} className={"mt-4"}>
                     <Card.Header>
-                         Meeting Start: {meetings.mDate.slice(0,10)} / {meetings.sTime}
+                         Meeting Start: {meeting.mDate.slice(0,10)} / {meeting.sTime}
                     </Card.Header>
                     <Card.Body>
                       <blockquote className="blockquote mb-0">
                         <p>
-                          {meetings.title}
+                          {meeting.title}
                         </p>
                         <footer className="blockquote-footer">
-                          Meeting Link : {meetings.link}
+                          Meeting Link : {meeting.link}
                         </footer>
                       </blockquote>
                       <Row className={"pt-5"}>
                         <Button 
                             type="submit"
                             variant="danger"
-                            onClick={() => removeMeeting(meetings._id)}
+                            onClick={() => removeMeeting(meeting._id)}
                         >
                             delete Meeting
                         </Button>
