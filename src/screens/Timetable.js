@@ -221,7 +221,7 @@ const TimeTable = () => {
                                 <option value="1">Monday</option>
                                 <option value="2">Tuesday</option>
                                 <option value="3">Wedsday</option>
-                                <option value="4">Tuesday</option>
+                                <option value="4">Thursday</option>
                                 <option value="5">Friday</option>
                             </Form.Control>
                         </Form.Group>
