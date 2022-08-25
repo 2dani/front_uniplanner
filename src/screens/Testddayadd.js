@@ -188,14 +188,14 @@ const Testddayadd = () => {
                                     <Button 
                                         type='submit'
                                         variant="primary"
-                                        className={"ml-5"}
+
                                     >
                                         Update
                                     </Button>
                                     <Button 
                                         type={"button"}
                                         variant="danger"
-                                        className={"ml-5"}
+                                        className={'ml-2'}
                                         onClick = {() => deleteATest()}
                                     >
                                         Delete
@@ -208,8 +208,7 @@ const Testddayadd = () => {
                         : (
                             <Button 
                             type='submit'
-                            variant="danger"
-                            className={"ml-5"}
+
                             >
                                 Register
                             </Button>
