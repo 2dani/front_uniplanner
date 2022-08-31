@@ -9,8 +9,7 @@ import { CustomModal } from "../component"
 
 
 const TimeTable = () => {
-    const navigate = useNavigate()
-
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
     const [day, setDay] = useState(0)
     const [subject, setSubject ] = useState("")
@@ -18,7 +17,7 @@ const TimeTable = () => {
     const [stime, setStime] = useState("")
     const [etime, setEtime] = useState("")
     const [type, setType] = useState("custom")
-    const params = useParams()
+    const params = useParams() //returns an obj of value pairs of URL parameters.
 
 
     const[tableId, setTableId] = useState("")
@@ -31,6 +30,7 @@ const TimeTable = () => {
 
     const [show, setShow] = useState(false);
 
+    //handle CLose when user want close lecutre Info from timetable
     const handleClose = () => {
         setShow(false);
         getTimetables()
@@ -44,20 +44,22 @@ const TimeTable = () => {
         setShow(true)
     };
 
-
+    //show the registered from user Lectures on the timetable
     const getTimetables = async () => {
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
+
+            // display all registered Lecture Info on the timetable
             const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable/all", config)
-            console.log("GETTIMETABLESSSSSSSSS",data)
 
             console.log(data.filter(i => i.day === 1 ))
 
+            // Using map, selected Day transfered in number and saved
             data.map(i => (
                 
                 i.startTime = new Date(i.startTime),
@@ -71,9 +73,7 @@ const TimeTable = () => {
                 setFriday(data.filter(i => i.day === 5))
                 
             ))
-
-                      
-
+                     
         } catch (err) {
             console.log(err)
         }
@@ -81,10 +81,12 @@ const TimeTable = () => {
     }
 
     useEffect( ()=> {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getTimetables()
+            getTimetables() // when user can log in, runs getTestInfo()
         }
     }, [])
 
@@ -111,6 +113,7 @@ const TimeTable = () => {
     }
 
 
+    // User can add a new Lecture on the timetable
     const addHandler = async (e) => {
         e.preventDefault()
 
@@ -130,9 +133,11 @@ const TimeTable = () => {
                 type
             }
             
+            //register new Lecture on the timetable with post Methode
             const {status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable", newTimeTable, config)
 
             if (status === 200) {
+                //when it's successfully added, then runs getTimetables() and  display the Timetables
                 getTimetables()
             }
 
@@ -150,6 +155,7 @@ const TimeTable = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // User can delete the Lecture from timetable
             const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/timetable/${id}`, config)
             
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!DELETE!!!!!!!!!!!!!!!!!!!!!!!", status)

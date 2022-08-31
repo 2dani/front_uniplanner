@@ -8,17 +8,18 @@ import axios from 'axios';
 
 const Login = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-
+    //Handle the Login
     const loginHandler = async (e) => { 
         e.preventDefault()
         
         try {
             const loginInfo = {
+                // For Login the User need only two inputs
                 email,
                 password,
             }
@@ -26,8 +27,9 @@ const Login = () => {
             const {data, status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/login", loginInfo)
             
             if (status === 200){
-                localStorage.setItem('token', data.token)
-                navigate('/')
+                //when User successfully logging in
+                localStorage.setItem('token', data.token) //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
+                navigate('/') // go to Todo Page
                 window.location.reload(false)
             }
  

@@ -5,22 +5,23 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 
-
 const Header = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() // hook returns a function that lets user navigate 
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
 
+  // User can Logout
   const logoutHandler = () => {
 
-    localStorage.removeItem("token")
-    navigate('/')
+    localStorage.removeItem("token") // token is removed from Localstorage
+    navigate('/') // there is no token so go back to the login Page
     window.location.reload(false)
     //getProfileFun()
   }
 
+  // For Authorization
   const getProfileFun = async () => {
     try {
 
@@ -33,6 +34,7 @@ const Header = () => {
           Authorization: `Bearer ${token}`
         },
       }
+      // axios.get return users profile, when user is authorized
       const { data } = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/profile", config)
       console.log("_____******________", data)
       setName(data.name)
@@ -45,7 +47,7 @@ const Header = () => {
   }
 
   useEffect(() => {
-    getProfileFun()
+    getProfileFun() // useEffect runs on the first render.
     
   }, [])
 

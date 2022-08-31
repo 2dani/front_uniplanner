@@ -12,5 +12,6 @@ import Login from "./Login"
 import Signup from "./Signup";
 import Profile from "./Profile";
 
+// This is Index page
 
 export { Profile, Main, Submit, Testdday, Timetable, Vacation, AddHomework, Testddayadd, Meeting, Groupwork, AddGr, Login, Signup }

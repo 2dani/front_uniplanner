@@ -4,8 +4,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Testddayadd = () => {
-    const navigate = useNavigate();
-    const params = useParams();
+    const navigate = useNavigate(); // hook returns a function that lets user navigate 
+    const params = useParams(); //returns an obj of value pairs of URL parameters.
     console.log("+++++++++++++++++++++++++++++++++++",params.id)
     const [name, setName] = useState("")
     const [sdate, setSdate] = useState("")
@@ -13,12 +13,13 @@ const Testddayadd = () => {
     const [endtime, setEndtime] = useState("")
     const [memo, setMemo] = useState("")
 
+    // User can add a new Test
     const addTestHandler = async (e) => {
         e.preventDefault()
-        const token = await localStorage.getItem("token")
+        const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` 
                 }
             }
         const newTest = {
@@ -30,6 +31,7 @@ const Testddayadd = () => {
         }
         console.log(newTest)
 
+        // User can register a new Test by using post Method
         const {data, status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test", newTest, config)
         console.log(status)
 
@@ -55,10 +57,13 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // User can update the registered Test Information
+            // ${params.id}, because the Test has to be selected from User
             const { status } = await axios.put(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, updateTest, config)
             console.log("UPDATED", status)
 
             if (status === 200) {
+                // when it's updated, automatically go back to Test-date Counter Page
                 navigate(-1)
     
             }
@@ -77,6 +82,8 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+
+            // User can Test select that he want see a Details
            const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, config)
            console.log("******GETTESTINFO*******", data)
            setName(data.testName)
@@ -98,6 +105,7 @@ const Testddayadd = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // ${params.id} only selected Test has to be deleted from User 
             const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${params.id}`, config)
             console.log("DELETE", status)
 
@@ -112,10 +120,12 @@ const Testddayadd = () => {
     }
     
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getTestInfo()
+            getTestInfo() // when user can log in, runs getTestInfo()
         }
     }, [])
 

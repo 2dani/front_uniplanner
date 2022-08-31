@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Signup = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -16,6 +16,7 @@ const Signup = () => {
 
     const signupHandler = async (e) => { 
         e.preventDefault()
+        //check, if user write the password correctly twice
         if (password !== confirmpw) {
             alert('Passwords do not match')
         }
@@ -30,10 +31,12 @@ const Signup = () => {
                 
             }
 
+            //when user request to register, post method send data to a web address
             const {status} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/signup", newSignup)
             
             if (status === 200){
-                navigate('/login')
+                //when user successfully registered status = 200
+                navigate('/login') // move to login page
             }
  
          } catch (err) {

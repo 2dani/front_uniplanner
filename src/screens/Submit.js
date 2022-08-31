@@ -8,9 +8,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 
 const Submit = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
     
-    const params = useParams()
+    const params = useParams() //returns an obj of value pairs of URL parameters.
 
     const [name, setName] = useState("")
     const [practiceNum, setPnumber] = useState(0)
@@ -24,15 +24,17 @@ const Submit = () => {
         
     })
 
+    // display all registered Assignment
     const getHomeworks = async () => {
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` //Bearer tokens can make requests to verfy authorization using an access key, like JWT
                 }
             }
 
+            // get Method can get Data
            const {data} = await instance.get("/submit", config)
             setHomeworks(data)
             console.log(data)
@@ -60,6 +62,7 @@ const Submit = () => {
         }
     }
 
+    // user can remove their Assignment
     const removeHomework = async(id) => {
         try{
             const token = await localStorage.getItem("token")
@@ -68,8 +71,10 @@ const Submit = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+
+            // only selected Assignment has to deleted, so here needed ${id} from registered homework
             const { status } = await instance.delete(`/submit/${id}`, config)
-            console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",status)
+    
             if (status === 200){
                 getHomeworks()
             }
@@ -103,10 +108,12 @@ const Submit = () => {
 
     
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getHomeworks()
+            getHomeworks() // when user can log in, runs getHomeworks()
         }
     }, [])
 

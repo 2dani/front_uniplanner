@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 
+// This component is for Copyright.
+
 const Footer = () => {
     return (
         <footer>
@@ -13,5 +15,6 @@ const Footer = () => {
         </footer>
     );
 };
+
 
 export default Footer;

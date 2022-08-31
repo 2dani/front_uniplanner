@@ -8,17 +8,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Testdday = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
     const [testddays, setddayss] = useState([])
 
     const getTest = async () => {
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` //Bearer tokens can make requests to verfy authorization using an access key, like JWT
                 }
             }
+            // user can expect to get back data to display in users application
            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/all", config)
             setddayss(data)
             console.log(data)
@@ -28,25 +29,14 @@ const Testdday = () => {
         }
     }
 
- /*   const updateTest = async (id) => {
-        try{
-            const { status } = await axios.patch(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/test/${id}`)
-            console.log("===================================",status)
-            if (status === 200){
-                getTest()
-            }
-        } catch (err) {
-            console.log(err)
-        } 
-    } 
-*/
 
     useEffect(() => {
-
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getTest()
+            getTest() // when user can log in, runs getTest()
         }
     }, [])
 

@@ -6,8 +6,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
 const AddHomework = () => {
-    const params = useParams();
-    const navigate = useNavigate();
+    const params = useParams(); //returns an obj of value pairs of URL parameters.
+    const navigate = useNavigate(); // hook returns a function that lets user navigate 
 
     const [name, setName] = useState("")
     const [practiceNum, setPracticeNumber] = useState(0)
@@ -24,7 +24,7 @@ const AddHomework = () => {
         e.preventDefault()   
     
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -39,9 +39,11 @@ const AddHomework = () => {
                 }
                 console.log("-------------------", newHomework)
                 
+                //// when user registered new Assignment, post Method send data to web adress
                 const {data, status} = await instance.post("/submit/add", newHomework, config)
                 
                 if (status === 201){
+                    //when the new Honework sucessfully added, than automatically go back to Assignment Page.
                     navigate(-1)
                 }
 
@@ -64,6 +66,7 @@ const AddHomework = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // get Method, but use ${params.id} behind /submit/, so you can get the id (homework) from URL.
             const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/submit/${params.id}`, config)
             console.log("*******getSubmitDetail*********", data)
             setName(data.name)
@@ -77,12 +80,12 @@ const AddHomework = () => {
     }
 
     useEffect(() => {
-        //getSubmitDetail()
-        //console.log("123123123123123123")
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getSubmitDetail()
+            getSubmitDetail() // when user can log in, runs getSubmitDetail()
         }
     }, [])
 

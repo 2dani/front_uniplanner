@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import {Col, Container, Row, Table} from 'react-bootstrap';
-import Holidays from 'date-holidays';
+import { Container, Table} from 'react-bootstrap';
+import Holidays from 'date-holidays'; // use a Library
 import { useNavigate } from 'react-router-dom';
 
 
-//
-// console.log(holiday)
-// console.log(holiday.map(name => <h2>{name}</h2>))
-// console.log(holiday.map(rule => <h2>{rule}</h2>))
-
-
 const Vacation = () => {
-
     const navigate = useNavigate()
-
-    const hd = new Holidays("DE");
+    const hd = new Holidays("DE"); // I want get Holidays from Germany
     const hday = hd.getHolidays()
-
     const [holidays, setHolidays] = useState([])
 
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            setHolidays(hday)
+            setHolidays(hday) // when user can log in, runs setHolidays(hday)
             console.log(holidays)
         }    
     }, [])
 
-
-    // holiday.map(name => <h2>{name}</h2>)
 
     return (
         <Container className={"pt-3"}>
@@ -61,5 +52,6 @@ const Vacation = () => {
         </Container>
     );
 };
+
 
 export default Vacation;

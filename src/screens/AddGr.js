@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from 'axios'; //for request to own backend Node.js server
 import React, {useState, useEffect} from 'react';
 import { Row, Button, Form, Container, } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const AddGr = () => {
-    const params = useParams();
-    const navigate = useNavigate();
+    const params = useParams(); //returns an obj of value pairs of URL parameters.
+    const navigate = useNavigate(); // hook returns a function that lets user navigate 
 
     const [name, setName] = useState("")
     const [pnumber, setPnumber] = useState(0)
@@ -15,18 +15,19 @@ const AddGr = () => {
     const [memo, setMemo] = useState("")
 
     const instance = axios.create({
+        // you can use instance baseURL instead of axios with full URL
         baseURL: 'http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api'
     })
 
+    // register new Groupwork 
     const addGRHandler = async (e) => {
-        e.preventDefault();
-        console.log("JKJKJKJKJKJKJKJKJKJKJKJ")
+        e.preventDefault(); // Default action that belongs to the event will not happen
 
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` //Bearer tokens can make requests to verfy authorization using an access key, like JWT
                 }
             }
                 const newGroupwork = {
@@ -39,12 +40,13 @@ const AddGr = () => {
                 }
                 console.log("-------------------", newGroupwork)
                 
+                // when user registered new Groupwork, post Method send data to web adress
                 const {data, status} = await axios.post(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/add`, newGroupwork, config)
-                console.log("DATAIS",data)
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!",status)
+                
                 
                 if (status === 200){
                     navigate(-1)
+                    //when the new Groupwork sucessfully added, than automatically go back to Groupwork Page.
                 }
                 console.log("************************",data) 
         } catch (err) {
@@ -52,6 +54,7 @@ const AddGr = () => {
         }
     }
 
+    // User can see the Details from registered Groupwork
     const getGroupworkInfo = async () => {
         try{
             const token = await localStorage.getItem("token")
@@ -60,8 +63,9 @@ const AddGr = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-           const { data } = await instance.get(`/grwork/${params.id}`, config)
-           console.log("****************", data)
+            // get Method, but use ${params.id} behind /grwork/, so you can get the id (groupwork) from URL.
+           const { data } = await instance.get(`/grwork/${params.id}`, config) 
+           //console.log("****************", data)
            setName(data.name)
            setPnumber(data.pnumber)
            setSdate(data.sdate)
@@ -74,46 +78,20 @@ const AddGr = () => {
 
     }
 
-    const updateGrHandler = async(e) => {
-        e.preventDefault()
-
-        const updateGr = {
-            name: name,
-            pnumber: pnumber,
-            sdate: sdate, 
-            stime: stime,
-            person: person,
-            memo: memo,
-        }
-        try{
-            const token = await localStorage.getItem("token")
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-            const { status } = await axios.put(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${params.id}`, updateGr, config)
-            console.log("GR IS UPDATED", status)
-
-            if (status === 200) {
-                navigate(-1)    
-            }
-            
-         } catch(err) {
-             console.log(err)
-         }
-        console.log("NOW UPDATED!")
-    }
+    
 
     useEffect(() => {
-        
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
+
         } else {
-            getGroupworkInfo()
+            getGroupworkInfo() // when user can log in, runs get getGroupworkInfo()
         }
     }, [])
 
+    // following Code is Style Code for my Application
     return (
         <Container className={"pt-5"}>
             <Link to="/grwork" className="btn btn-secondary my-3 mb-3">

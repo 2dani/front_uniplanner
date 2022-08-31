@@ -4,9 +4,8 @@ import { Container, Row, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const Profile = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
-    
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -14,7 +13,7 @@ const Profile = () => {
     const getProfileFun = async () => {
         try {
 
-        const token = await localStorage.getItem("token")
+        const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
 
         console.log(token)
 
@@ -23,6 +22,7 @@ const Profile = () => {
             Authorization: `Bearer ${token}`
             },
         }
+        // user can expect to get back data to display in users application, so user can see Profile
         const { data } = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user/profile", config)
         console.log("_____******________", data)
         setName(data.name)
@@ -33,17 +33,17 @@ const Profile = () => {
         }
     }
 
+    // User can modify profile
     const updateUserHandler = async (e) => {
         e.preventDefault()
 
         try {
+            //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const token = localStorage.getItem("token")
-
-            console.log(token)
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` //Bearer tokens can make requests to verfy authorization using an access key, like JWT
                 },
             }
 
@@ -51,12 +51,14 @@ const Profile = () => {
                 name, email, password
             }
 
+            // put Method request update an existing data, here name and password
             const { status } = await axios.put(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/user`, userInput, config)
-            console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",status)
+
             if (status === 200){
-                
+                //when successfully updated
                 alert('User updated')
                 getProfileFun()
+                window.location.reload(false)
 
             }
         } catch(err) {
@@ -67,12 +69,13 @@ const Profile = () => {
 
 
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getProfileFun()
+            getProfileFun() // when user can log in, runs getProfileFun
         }
-        
     }, [])
 
     return (

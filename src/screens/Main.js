@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
     const[todo, setTodo] = useState("")
     const[endDate, setEndDate] = useState("")
@@ -17,12 +17,13 @@ const Main = () => {
     // networking
     const getTodos = async () => {
         try {
-            const token = localStorage.getItem("token")
+            const token = localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`//Bearer tokens can make requests to verfy authorization using an access key, like JWT
                 }
             }
+            // user can expect to get back data to display in users application
             const {data} = await instance.get("/todo", config)
             setTodos(data)
 
@@ -44,15 +45,16 @@ const Main = () => {
                 todo,
                 endDate,
             }
-            console.log("THis is NewTodo",newTodo)
+            // when user register new Todo, post Method send data to web address
             const {data} = await instance.post("/todo", newTodo, config)
-            console.log("$$$$$$$$$TODO DATA$$$$$$$$$", data)
+    
             window.location.reload(false)
         } catch(err) {
             console.log(err)
         }
     }
 
+    //update Todo 
     const updateTodo  = async (id, finish) => {
         try {
             const token = await localStorage.getItem("token")
@@ -82,6 +84,7 @@ const Main = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            //user can delete the registered Todo through delete Method
             const { status } = await instance.delete(`/todo/${id}`, config)
             console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",status)
             if (status === 200) {
@@ -95,11 +98,12 @@ const Main = () => {
 
 
     useEffect(() => {
-        //getTodos()
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getTodos()
+            getTodos() // when user can log in, runs getTodos()
         }
     }, [])
 

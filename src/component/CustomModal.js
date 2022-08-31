@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, Modal } from "react-bootstrap"
 import format from 'date-fns/format';
 
+
+// This component is for Timetable, when User click the registered Lecture on the timetable
+
 const CustomModal = ({ show, handleClose, deleteBtn, name, location, startTime, endTime }) => {
     
     return (
@@ -12,7 +15,7 @@ const CustomModal = ({ show, handleClose, deleteBtn, name, location, startTime, 
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{name} / {location} </Modal.Title>
+                    <Modal.Title>{name} / {location} </Modal.Title> 
                 </Modal.Header>
                 <Modal.Body>
                     {/*{format(startTime, "HH:mm")} - {format(endTime, "HH:mm")}*/}

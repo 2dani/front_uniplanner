@@ -4,9 +4,8 @@ import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Meeting = () => {
-    const params = useParams();
-    const navigate = useNavigate()
-    //console.log("+++++++++++++++++++++++++++++++++++",params.id)
+    const params = useParams(); //returns an obj of value pairs of URL parameters.
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
     const[title, setMeeting] = useState("")
     const[mDate, setEndDate] = useState("")
     const[sTime, setMeetingtime] = useState("")
@@ -17,14 +16,14 @@ const Meeting = () => {
     // networking
     const getMeetings = async () => {
         try {
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // user can expect to get back all data to display in users application
            const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/all", config)
-           console.log("GETMEETINGSDATA!!",data) 
            setMeetings(data)
 
         } catch (err) {
@@ -32,6 +31,7 @@ const Meeting = () => {
         }
     }
 
+    //User can register Todo
     const registerTodo = async (e) => {
         e.preventDefault()
         try{
@@ -48,9 +48,8 @@ const Meeting = () => {
                 link,
             }
             console.log("NEW MEETING",newMeeting)
-
+            // with Post Method User can register data to a web adress
             const {data} = await axios.post("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting", newMeeting, config)
-            console.log("$$$$$$$$$$$$$$$$$$ REGISTER TODO DATA", data)
 
             window.location.reload(false)
         } catch(err) {
@@ -59,7 +58,8 @@ const Meeting = () => {
 
     }
 
-    // show datails Info of Meeting
+    // show datails Info of Meeting 
+    // But this is not used
     const getMeetingInfo = async () => {
         try{
             const token = await localStorage.getItem("token")
@@ -89,9 +89,10 @@ const Meeting = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            //User can delete the registered Meeting Info through delete Method
             const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/meeting/${id}`, config)
-            console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",status)
             if (status === 200){
+                // when the Meeting deleted, runs getMeetings() and show the Meeting Page rest Meetings
                 getMeetings()
             }
         } catch (err) {
@@ -100,13 +101,12 @@ const Meeting = () => {
     }
 
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
-        } else {
-            
-            getMeetings()
-            
-
+        } else {         
+            getMeetings() // when user can log in, runs getMeetings()
         }
     }, [])
 

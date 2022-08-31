@@ -6,9 +6,9 @@ import axios from "axios";
 
 
 const Groupwork = () => {
-    const params = useParams()
+    const params = useParams() //returns an obj of value pairs of URL parameters.
 
-    const navigate = useNavigate()
+    const navigate = useNavigate() // hook returns a function that lets user navigate 
 
     const [name, setName] = useState("")
     const [pnumber, setPnumber] = useState(0)
@@ -25,12 +25,13 @@ const Groupwork = () => {
 
     const getGroupwork = async () => {
         try{
-            const token = await localStorage.getItem("token")
+            const token = await localStorage.getItem("token") //when passed name of the key, will return that key's value from the given Storage obj , or null when the key does not exist
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
+            // user can expect to get back data to display in users application
             const {data} = await axios.get("http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/all", config)
             setGroupworks(data)
         } catch(err){
@@ -47,6 +48,7 @@ const Groupwork = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
+            //user can delete the registered Groupwork through delete Method
             const { status } = await axios.delete(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${id}`, config)
             console.log("GRWORK",status)
             if (status === 200){
@@ -66,7 +68,7 @@ const Groupwork = () => {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }
+            }        
            const { data } = await axios.get(`http://uniplannerbackend-env.eba-2mpxvpuu.us-east-1.elasticbeanstalk.com/api/grwork/${params.id}`,config)
            console.log("*******GRWORKDATA*********", data)
            setName(data.name)
@@ -82,10 +84,12 @@ const Groupwork = () => {
     }
 
     useEffect(() => {
+        // User can use the application, when user is successfully authorized       
+        //when there is no token in localStorage, user can not leave Login page
         if (!localStorage.getItem("token")) {
             navigate('/login')
         } else {
-            getGroupwork()
+            getGroupwork() // when user can log in, runs getGroupwork()
         }
     }, [])
 
